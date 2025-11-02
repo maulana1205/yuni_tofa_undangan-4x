@@ -206,17 +206,18 @@ body{
 
 .guest-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem; /* lebih besar dari sebelumnya */
-  font-weight: 600;
+  font-size: 1.4rem;
   font-style: italic;
+  font-weight: 600;
   color: #5a3e36;
   background: rgba(255,255,255,0.85);
   padding: 8px 18px;
   border-radius: 10px;
   display: inline-block;
+  margin: 1rem 0 1.5rem 0; /* beri jarak dari tanggal dan tombol */
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
   max-width: 90%;
   text-align: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 }
 
 @media (max-width: 600px) {
