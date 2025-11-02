@@ -1,6 +1,6 @@
-/* script.js - Undangan Jawa Elegan (Vercel Ready) */
+/* script.js - Undangan Jawa Elegan (Vercel Ready + Firebase) */
 
-// ELEMENTS
+// ===================== ELEMENTS =====================
 const openBtn = document.getElementById('openBtn');
 const landing = document.getElementById('landing');
 const app = document.getElementById('app');
@@ -9,7 +9,7 @@ const toggleMusic = document.getElementById('toggleMusic');
 const confettiLanding = document.getElementById('confettiLanding');
 const confettiMain = document.getElementById('confettiMain');
 
-// NAMA TAMU (dari URL)
+// ===================== NAMA TAMU (dari URL) =====================
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const guest = params.get("to");
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// CONFETTI (efek kelopak)
+// ===================== CONFETTI =====================
 function makeConfetti(canvas, petalCount = 60) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -64,7 +64,7 @@ function makeConfetti(canvas, petalCount = 60) {
 makeConfetti(confettiLanding, 90);
 makeConfetti(confettiMain, 40);
 
-// OPEN INVITATION
+// ===================== OPEN INVITATION =====================
 openBtn.addEventListener('click', () => {
   landing.style.transition = 'opacity .8s ease';
   landing.style.opacity = '0';
@@ -80,7 +80,7 @@ openBtn.addEventListener('click', () => {
   });
 });
 
-// MUSIC TOGGLE
+// ===================== MUSIC TOGGLE =====================
 if (toggleMusic) {
   toggleMusic.addEventListener('click', () => {
     if (bgMusic.paused) {
@@ -92,12 +92,11 @@ if (toggleMusic) {
   });
 }
 
-// NAVIGATION (scroll ke section, bukan sembunyikan)
+// ===================== NAVIGATION =====================
 document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     const target = btn.getAttribute('data-target');
     const section = document.getElementById(target);
     if (section) {
@@ -107,8 +106,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
   });
 });
 
-
-// SLIDE MEMPELAI
+// ===================== SLIDE MEMPELAI =====================
 function animateMempelai() {
   const left = document.getElementById('mempelai-wanita');
   const right = document.getElementById('mempelai-pria');
@@ -121,7 +119,7 @@ function animateMempelai() {
   }, 50);
 }
 
-// GOOGLE CALENDAR
+// ===================== GOOGLE CALENDAR =====================
 document.getElementById('saveCal').addEventListener('click', () => {
   const title = encodeURIComponent('Akad Pernikahan Yuni & Tofa');
   const details = encodeURIComponent('Akad pernikahan Yuni & Tofa');
@@ -132,7 +130,7 @@ document.getElementById('saveCal').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-// COUNTDOWN
+// ===================== COUNTDOWN =====================
 function updateCountdown() {
   const target = new Date(2025, 11, 7, 9, 0, 0);
   const now = new Date();
@@ -150,34 +148,68 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ===================== UCAPAN & DOA (via Serverless API) =====================
-async function loadcomment() {
-  const res = await fetch('/api/comment');
-  const data = await res.json();
-  const list = document.getElementById('commentList');
-  list.innerHTML = data.length
-    ? data.map(c => `
+// ===================== UCAPAN & DOA (Firebase Realtime Database) =====================
+const firebaseScript = document.createElement('script');
+firebaseScript.type = 'module';
+firebaseScript.textContent = `
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAfg1Ga9APDH6SA8q1gY-nQO_0U_L04REc",
+  authDomain: "undangan-yuni-tofa.firebaseapp.com",
+  databaseURL: "https://undangan-yuni-tofa-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "undangan-yuni-tofa",
+  storageBucket: "undangan-yuni-tofa.firebasestorage.app",
+  messagingSenderId: "402863971401",
+  appId: "1:402863971401:web:ae5da9e1d34cf1bfccb398"
+};
+
+const appFirebase = initializeApp(firebaseConfig);
+const db = getDatabase(appFirebase);
+const commentsRef = ref(db, 'comments');
+
+// Load comments
+function loadComment() {
+  onValue(commentsRef, (snapshot) => {
+    const list = document.getElementById('commentList');
+    if (!list) return;
+
+    const data = snapshot.val();
+    if (!data) {
+      list.innerHTML = '<p class="small-muted">Belum ada ucapan. Jadilah yang pertama!</p>';
+      return;
+    }
+
+    const commentsArray = Object.values(data).sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+    list.innerHTML = commentsArray.map(c => \`
       <div class="comment-item">
-        <strong>${c.name}</strong>
-        <p>${c.comment}</p>
-      </div>`).join('')
-    : '<p class="small-muted">Belum ada ucapan. Jadilah yang pertama!</p>';
+        <strong>\${c.name}</strong>
+        <p>\${c.comment}</p>
+      </div>\`
+    ).join('');
+  });
 }
 
-document.getElementById('commentForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('nameInput').value.trim();
-  const comment = document.getElementById('commentInput').value.trim();
-  if (!name || !comment) return;
+// Submit comment
+const commentForm = document.getElementById('commentForm');
+if (commentForm) {
+  commentForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('nameInput').value.trim();
+    const comment = document.getElementById('commentInput').value.trim();
+    if (!name || !comment) return;
 
-  await fetch('/api/comment', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, comment })
+    await push(commentsRef, {
+      name,
+      comment,
+      createdAt: serverTimestamp()
+    });
+
+    e.target.reset();
   });
+}
 
-  e.target.reset();
-  loadcomment();
-});
-
-loadcomment();
+loadComment();
+`;
+document.body.appendChild(firebaseScript);
