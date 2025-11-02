@@ -92,18 +92,21 @@ if (toggleMusic) {
   });
 }
 
-// NAVIGATION
+// NAVIGATION (scroll ke section, bukan sembunyikan)
 document.querySelectorAll('.nav-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
     const target = btn.getAttribute('data-target');
-    document.querySelectorAll('.page').forEach(p => p.style.display = (p.id === target ? 'block' : 'none'));
-    document.querySelector('#contentLeft').scrollTop = 0;
-    if (target === 'mempelai') animateMempelai();
+    const section = document.getElementById(target);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (target === 'mempelai') animateMempelai();
+    }
   });
 });
-document.querySelectorAll('.page').forEach(p => p.style.display = (p.id === 'home' ? 'block' : 'none'));
+
 
 // SLIDE MEMPELAI
 function animateMempelai() {
