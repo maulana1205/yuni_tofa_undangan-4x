@@ -97,12 +97,34 @@ body{
 
 /* Responsive */
 @media(max-width:900px){
-  .app{ flex-direction:column; padding:1rem; }
-  .panel-right{ width:100%; position:relative; order:2; margin-top:0; }
-  .content-left{ order:1; }
-  .mempelai-item{ width:48%; min-width:150px; }
-  .panel-nav{ flex-direction:row; justify-content:center; gap:.4rem; flex-wrap:wrap; }
-  .avatar-wrap{ width:80px; height:80px; border-width:4px; }
+  .app {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .panel-right {
+    width: 100%;
+    position: relative;
+    order: 1; /* ubah dari 2 ke 1 biar di atas */
+    margin-bottom: 1rem;
+  }
+  .content-left {
+    order: 2; /* ubah dari 1 ke 2 biar di bawah */
+  }
+  .mempelai-item {
+    width: 48%;
+    min-width: 150px;
+  }
+  .panel-nav {
+    flex-direction: row;
+    justify-content: center;
+    gap: .4rem;
+    flex-wrap: wrap;
+  }
+  .avatar-wrap {
+    width: 80px;
+    height: 80px;
+    border-width: 4px;
+  }
 }
 
 .map-wrapper {
