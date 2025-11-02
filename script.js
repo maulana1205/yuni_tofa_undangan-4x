@@ -151,10 +151,10 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // ===================== UCAPAN & DOA (via Serverless API) =====================
-async function loadComments() {
-  const res = await fetch('/api/comments');
+async function loadcomment() {
+  const res = await fetch('/api/comment');
   const data = await res.json();
-  const list = document.getElementById('commentsList');
+  const list = document.getElementById('commentList');
   list.innerHTML = data.length
     ? data.map(c => `
       <div class="comment-item">
@@ -170,14 +170,14 @@ document.getElementById('commentForm').addEventListener('submit', async (e) => {
   const comment = document.getElementById('commentInput').value.trim();
   if (!name || !comment) return;
 
-  await fetch('/api/comments', {
+  await fetch('/api/comment', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, comment })
   });
 
   e.target.reset();
-  loadComments();
+  loadcomment();
 });
 
-loadComments();
+loadcomment();
