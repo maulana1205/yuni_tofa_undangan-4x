@@ -29,6 +29,38 @@
     <aside class="content-left" id="contentLeft">
 
       <!-- HOME -->
+          <!-- RIGHT PANEL -->
+    <aside class="panel-right">
+      <div class="panel-inner">
+        <div class="avatar-wrap">
+          <img src="assets/couple.png" alt="Mempelai" id="avatar">
+        </div>
+        <h3 class="panel-names">Yuni &amp; Tofa</h3>
+        <p class="panel-date">Minggu, 7 Desember 2025</p>
+
+        <div class="countdown" id="countdown">
+          <div class="cd-item"><span id="cd-days">0</span><small>Hari</small></div>
+          <div class="cd-item"><span id="cd-hours">0</span><small>Jam</small></div>
+          <div class="cd-item"><span id="cd-minutes">0</span><small>Menit</small></div>
+          <div class="cd-item"><span id="cd-seconds">0</span><small>Detik</small></div>
+        </div>
+
+        <div class="panel-actions">
+          <button id="saveCal" class="btn-small">Save Google Calendar</button>
+          <button id="toggleMusic" class="btn-small">⏸</button>
+        </div>
+
+        <nav class="panel-nav">
+          <button data-target="home" class="nav-btn active">Home</button>
+          <button data-target="mempelai" class="nav-btn">Mempelai</button>
+          <button data-target="lokasi" class="nav-btn">Lokasi</button>
+          <button data-target="rekening" class="nav-btn">Rekening</button>
+          <button data-target="ucapan" class="nav-btn">Ucapan</button>
+        </nav>
+      </div>
+      <canvas id="confettiMain"></canvas>
+    </aside>
+  </div> 
       <section id="home" class="page card">
         <h2 class="section-title">Moment Bahagia</h2>
         <div class="card-inner">
@@ -136,38 +168,7 @@
       </footer>
     </aside>
 
-    <!-- RIGHT PANEL -->
-    <aside class="panel-right">
-      <div class="panel-inner">
-        <div class="avatar-wrap">
-          <img src="assets/couple.png" alt="Mempelai" id="avatar">
-        </div>
-        <h3 class="panel-names">Yuni &amp; Tofa</h3>
-        <p class="panel-date">Minggu, 7 Desember 2025</p>
-
-        <div class="countdown" id="countdown">
-          <div class="cd-item"><span id="cd-days">0</span><small>Hari</small></div>
-          <div class="cd-item"><span id="cd-hours">0</span><small>Jam</small></div>
-          <div class="cd-item"><span id="cd-minutes">0</span><small>Menit</small></div>
-          <div class="cd-item"><span id="cd-seconds">0</span><small>Detik</small></div>
-        </div>
-
-        <div class="panel-actions">
-          <button id="saveCal" class="btn-small">Save Google Calendar</button>
-          <button id="toggleMusic" class="btn-small">⏸</button>
-        </div>
-
-        <nav class="panel-nav">
-          <button data-target="home" class="nav-btn active">Home</button>
-          <button data-target="mempelai" class="nav-btn">Mempelai</button>
-          <button data-target="lokasi" class="nav-btn">Lokasi</button>
-          <button data-target="rekening" class="nav-btn">Rekening</button>
-          <button data-target="ucapan" class="nav-btn">Ucapan</button>
-        </nav>
-      </div>
-      <canvas id="confettiMain"></canvas>
-    </aside>
-  </div>
+ 
 
   <!-- AUDIO -->
   <audio id="bgMusic" src="assets/music.mp3" preload="auto" loop></audio>
