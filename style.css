@@ -218,3 +218,46 @@ body{
     padding: 6px 14px;
   }
 }
+
+/* ==== Perbaikan tampilan mobile landing section ==== */
+@media (max-width: 600px) {
+  .landing {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px; /* turunkan isi agar "The Wedding Of" terlihat */
+  }
+
+  .landing-inner {
+    width: 100%;
+    max-width: 90%;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .landing-couple {
+    width: 180px;
+    margin: 0 auto 0.6rem;
+  }
+
+  .landing-names {
+    font-size: 2.3rem;
+  }
+
+  .landing-date {
+    font-size: 1rem;
+  }
+
+  .guest-name {
+    display: block;
+    margin: 1rem auto 1.3rem auto; /* pastikan di atas tombol open invitation */
+    text-align: center;
+    font-size: 1.3rem;
+    padding: 8px 16px;
+  }
+
+  .btn-open {
+    display: block;
+    margin: 0 auto; /* biar tombol tetap center di bawah nama tamu */
+  }
+}
